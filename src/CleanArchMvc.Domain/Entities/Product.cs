@@ -13,7 +13,7 @@ public sealed class Product : Entity
 	public int CategoryId { get; set; }
 	public Category? Category { get; set; }
 
-	public Product(string name, string description, decimal price, int stock, string image) : this(0, name, description, price, stock, image) { }
+	public Product(string name, string description, decimal price, int stock, string image) : this(0, name, description, price, stock, image) {}
 
 	public Product(int id, string name, string description, decimal price, int stock, string image)
 	{
@@ -35,7 +35,7 @@ public sealed class Product : Entity
 		ValidateAndSetProduct(name, description, price, stock, image, categoryId);
 	}
 
-	private void ValidateAndSetProduct(string name, string description, decimal price, int stock, string image, int categoryId)
+	private void ValidateAndSetProduct(string name, string description, decimal price, int stock, string? image, int categoryId)
 	{
 		DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Invalid name, name is required!");
 		DomainExceptionValidation.When(name.Length < 4, "Invalid name, minimum name, 3 characters!");
@@ -46,7 +46,8 @@ public sealed class Product : Entity
 		DomainExceptionValidation.When(price < 0, "Invalid price value");
 		DomainExceptionValidation.When(stock < 0, "Invalid stock value");
 
-		DomainExceptionValidation.When(image.Length > 250, "Invalid image, maximum 250 characters!");
+		DomainExceptionValidation.When(image == null, "Invalid image!");
+		DomainExceptionValidation.When(image?.Length > 250, "Invalid image path, maximum 250 characters!");
 
 		Name = name;
 		Description = description;
