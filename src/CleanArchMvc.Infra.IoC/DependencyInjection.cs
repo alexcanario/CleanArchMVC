@@ -1,4 +1,7 @@
-﻿using CleanArchMvc.Domain.Interfaces;
+﻿using CleanArchMvc.App.Interfaces;
+using CleanArchMvc.App.Mapping;
+using CleanArchMvc.App.Services;
+using CleanArchMvc.Domain.Interfaces;
 using CleanArchMvc.Infra.Data.Context;
 using CleanArchMvc.Infra.Data.Repositories;
 
@@ -18,6 +21,18 @@ public static class DependencyInjection
 				, b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
 		});
 
+		services.AddRepositories();
+	}
+
+	public static void AddAppServices(this IServiceCollection services)
+	{
+		services.AddScoped<ICategoryService, CategoryService>();
+		services.AddScoped<IProductService, ProductService>();
+		services.AddAutoMapper(typeof(CategoryToCategoryDto).Assembly);
+	}
+
+	private static void AddRepositories(this IServiceCollection services)
+	{
 		services.AddScoped<ICategoryRepository, CategoryRepository>();
 		services.AddScoped<IProductRepository, ProductRepository>();
 	}
