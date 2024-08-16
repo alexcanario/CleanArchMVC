@@ -10,7 +10,7 @@ internal class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 	{
 		var currentDirectory = Directory.GetCurrentDirectory();
 		var currentDiParent = Directory.GetParent(currentDirectory);
-		var appSettingDir = $@"{currentDiParent!.FullName}\CookBook.Api\";
+		var appSettingDir = $@"{currentDiParent!.FullName}\CleanArchMvc.WebUI\";
 
 		var configuration = new ConfigurationBuilder()
 			.SetBasePath(appSettingDir)
