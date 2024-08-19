@@ -1,4 +1,5 @@
 ﻿using CleanArchMvc.Domain.Entities;
+using CleanArchMvc.Infra.Data.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -13,5 +14,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 	{
 		base.OnModelCreating(modelBuilder);
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+		modelBuilder.Sow();
 	}
 }

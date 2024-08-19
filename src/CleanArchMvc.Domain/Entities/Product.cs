@@ -15,9 +15,9 @@ public sealed class Product : Entity
 
 	public Product(string name, string description, decimal price, int stock, string image) : this(0, name, description, price, stock, image) {}
 
-	public Product(int id, string name, string description, decimal price, int stock, string image)
+	public Product(int id, string name, string description, decimal price, int stock, string image, int categoryId = -1)
 	{
-		ValidateAndSetProduct(id, name, description, price, stock, image, -1);
+		ValidateAndSetProduct(id, name, description, price, stock, image, categoryId);
 	}
 
 	public void Update(string name, string description, decimal price, int stock, string image, int categoryId)
