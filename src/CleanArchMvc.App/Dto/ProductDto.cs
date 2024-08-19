@@ -33,10 +33,10 @@ public record ProductDto(int Id, string Name, decimal Price, int Stock, string I
 	public int Stock { get; init; }
 
 	[MaxLength(250)]
-	[DisplayName("ProductDto Image")]
+	[DisplayName("Product Image")]
 	public string Image { get; init; } = string.Empty;
 
-	[DisplayName("CategoryDto")]
+	[DisplayName("Category")]
 	public int CategoryId { get; init; }
 	public CategoryDto? Category { get; init; }
 }

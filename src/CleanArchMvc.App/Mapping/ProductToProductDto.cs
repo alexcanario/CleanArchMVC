@@ -9,6 +9,6 @@ public class ProductToProductDto : Profile
 {
 	public ProductToProductDto()
 	{
-		CreateMap<Category, CategoryDto>().ReverseMap();
+		CreateMap<Product, ProductDto>().ReverseMap();
 	}
 }
