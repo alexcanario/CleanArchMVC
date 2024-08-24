@@ -1,41 +1,42 @@
 using CleanArchMvc.Infra.IoC;
 
-namespace CleanArchMvc.WebUI
+namespace CleanArchMvc.WebUI;
+
+public class Program
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-			builder.Services.AddInfra(builder.Configuration);
-			builder.Services.AddAppServices();
-			
-			// Add services to the container.
-			builder.Services.AddControllersWithViews();
+        builder.Services.AddInfra(builder.Configuration);
 
-			var app = builder.Build();
+        builder.Services.AddAppServices();
 
-			// Configure the HTTP request pipeline.
-			if (!app.Environment.IsDevelopment())
-			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
 
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
+        var app = builder.Build();
 
-			app.UseRouting();
+        // Configure the HTTP request pipeline.
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
+        }
 
-			app.UseAuthorization();
+        app.UseHttpsRedirection();
 
-			app.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.UseStaticFiles();
 
-			app.Run();
-		}
-	}
+        app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        app.Run();
+    }
 }
