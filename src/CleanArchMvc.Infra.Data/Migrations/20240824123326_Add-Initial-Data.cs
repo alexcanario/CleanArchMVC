@@ -7,7 +7,7 @@
 namespace CleanArchMvc.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class AddInitialData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,22 @@ namespace CleanArchMvc.Infra.Data.Migrations
                     { 1, "Material escolar" },
                     { 2, "Eletrônicos" },
                     { 3, "Acessórios" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "CategoryId", "Description", "Image", "Name", "Price", "Stock" },
+                values: new object[,]
+                {
+                    { 1, 1, "Papel A4", "", "Papel", 10m, 1 },
+                    { 2, 1, "Caneta bic", "", "Caneta", 2m, 10 },
+                    { 3, 1, "Lápis Faber Castel", "", "Lápis", 4m, 10 },
+                    { 4, 2, "Celular A12", "", "Celular", 1200m, 10 },
+                    { 5, 2, "Tv 32 polegadas Samsung", "", "Tv Smart", 2500m, 10 },
+                    { 6, 2, "Notebook Avell liv62", "", "Notebook", 9870m, 10 },
+                    { 7, 3, "Bolsa de couro legítimo", "", "Bolsa", 500m, 1 },
+                    { 8, 3, "Necessary padrão", "", "Necessary", 150m, 10 },
+                    { 9, 3, "Pasta térmica", "", "Pasta", 22m, 10 }
                 });
 
             migrationBuilder.CreateIndex(

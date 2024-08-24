@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
-public class CategoryController(ICategoryService service, IMapper mapper) : Controller
+public class CategoryController(ICategoryService service) : Controller
 {
 	[HttpGet("Details")]
 	public async Task<IActionResult> Index()

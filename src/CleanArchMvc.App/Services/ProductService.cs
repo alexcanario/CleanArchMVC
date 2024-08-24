@@ -1,41 +1,46 @@
 ﻿using AutoMapper;
 
-using CleanArchMvc.App.Dto;
+using CleanArchMvc.App.Dtos;
 using CleanArchMvc.App.Interfaces;
+using CleanArchMvc.App.Products.Commands;
+using CleanArchMvc.App.Products.Queries;
 using CleanArchMvc.Domain.Entities;
 using CleanArchMvc.Domain.Interfaces;
 
+using MediatR;
+
 namespace CleanArchMvc.App.Services;
 
-public class ProductService(IProductRepository productRepository, IMapper mapper) : IProductService
+public class ProductService(IMediator mediator, IMapper mapper) : IProductService
 {
 	public async Task<IEnumerable<ProductDto>> GetAllAsync()
 	{
-		return mapper.Map<IEnumerable<ProductDto>>(await productRepository.GetAllAsync()) ?? [];
-	}
+        var products = await mediator.Send(new GetProductsQuery());
+        return products.Any() ? mapper.Map<IEnumerable<ProductDto>>(products) : [];
+    }
 
 	public async Task<ProductDto> GetByIdAsync(int id)
 	{
-		return mapper.Map<ProductDto>(await productRepository.GetByIdAsync(id));
-	}
+        return mapper.Map<ProductDto>(await mediator.Send(new GetProductByIdQuery(id)));
+    }
 
 	public async Task<ProductDto> GetProductCategoryByIdAsync(int id)
 	{
-		return mapper.Map<ProductDto>(await productRepository.GetProductWithCategoryByIdAsync(id));
-	}
+        return mapper.Map<ProductDto>(await mediator.Send(new GetProductByIdWithCategoryQuery(id)));
+    }
 
 	public async Task Create(ProductDto productDto)
 	{
-		await productRepository.CreateAsync(mapper.Map<Product>(productDto));
-	}
+        await mediator.Send(mapper.Map<ProductCreateCommand>(productDto));
+    }
 
-	public async Task Update(ProductDto categoryDto)
+	public async Task Update(ProductDto productDto)
 	{
-		await productRepository.UpdateAsync(mapper.Map<Product>(categoryDto));
-	}
+        await mediator.Send(mapper.Map<ProductUpdateCommand>(productDto));
+    }
 
 	public async Task Delete(int id)
 	{
-		await productRepository.DeleteAsync(id);
-	}
+        await mediator.Send(new ProductUpdateCommand(id));
+    }
 }
