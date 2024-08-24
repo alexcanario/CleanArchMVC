@@ -1,5 +1,5 @@
 ﻿using CleanArchMvc.App.Interfaces;
-using CleanArchMvc.App.Mapping;
+using CleanArchMvc.App.Mappings;
 using CleanArchMvc.App.Services;
 using CleanArchMvc.Domain.Interfaces;
 using CleanArchMvc.Infra.Data.Context;
@@ -13,27 +13,28 @@ namespace CleanArchMvc.Infra.IoC;
 
 public static class DependencyInjection
 {
-	public static void AddInfra(this IServiceCollection services, IConfiguration configuration)
-	{
-		services.AddDbContext<AppDbContext>(options =>
-		{
-			options.UseSqlServer(configuration.GetConnectionString("Default")
-				, b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
-		});
+    public static void AddInfra(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseSqlServer(configuration.GetConnectionString("Default")
+                , b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
+        });
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("CleanArchMvc.App")));
+        services.AddRepositories();
+    }
 
-		services.AddRepositories();
-	}
+    public static void AddAppServices(this IServiceCollection services)
+    {
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddAutoMapper(typeof(CategoryToCategoryDto).Assembly);
+    }
 
-	public static void AddAppServices(this IServiceCollection services)
-	{
-		services.AddScoped<ICategoryService, CategoryService>();
-		services.AddScoped<IProductService, ProductService>();
-		services.AddAutoMapper(typeof(CategoryToCategoryDto).Assembly);
-	}
-
-	private static void AddRepositories(this IServiceCollection services)
-	{
-		services.AddScoped<ICategoryRepository, CategoryRepository>();
-		services.AddScoped<IProductRepository, ProductRepository>();
-	}
+    private static void AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+    }
 }

@@ -1,4 +1,4 @@
-﻿using CleanArchMvc.App.Dto;
+﻿using CleanArchMvc.App.Dtos;
 
 namespace CleanArchMvc.App.Interfaces;
 

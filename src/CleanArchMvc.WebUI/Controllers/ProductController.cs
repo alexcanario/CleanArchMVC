@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-
-using CleanArchMvc.App.Interfaces;
+﻿using CleanArchMvc.App.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
-public class ProductController(IProductService service, IMapper mapper) : Controller
+public class ProductController(IProductService service) : Controller
 {
     // GET: ProductController
     [HttpGet]
