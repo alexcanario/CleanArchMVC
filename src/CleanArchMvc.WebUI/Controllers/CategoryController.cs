@@ -20,6 +20,7 @@ public class CategoryController(ICategoryService service) : Controller
     }
 
     [HttpGet()]
+    [Route("api/[controller]")]
     public IActionResult Create()
     {
         return View();
@@ -37,9 +38,26 @@ public class CategoryController(ICategoryService service) : Controller
         return View();
     }
 
-    public IActionResult Edit()
+    [HttpGet()]
+    public async Task<IActionResult> Edit(int? id)
     {
-        return Ok();
+        if(id == null)
+            return BadRequest();
+
+        var category = await service.GetCategoryByIdAsync(id.Value);
+        if(category == null) 
+            return NotFound();
+
+        return View(category);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(CategoryDto category)
+    {
+        if (category == null) return BadRequest();
+        
+        await service.UpdateAsync(category);
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Delete()
