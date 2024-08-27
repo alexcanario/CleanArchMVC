@@ -7,26 +7,20 @@ namespace CleanArchMvc.WebUI.Controllers;
 
 public class CategoryController(ICategoryService service) : Controller
 {
-	[HttpGet("List")]
+	[HttpGet()]
 	public async Task<IActionResult> Index()
 	{
 		var categories = await service.GetAllAsync();
 		return View(categories);
 	}
 
-    public IActionResult Details()
-    {
-        return Ok();
-    }
-
     [HttpGet()]
-    [Route("api/[controller]")]
     public IActionResult Create()
     {
         return View();
     }
 
-    [HttpPost]
+    [HttpPost()]
     public async Task<IActionResult> Create(CategoryDto category)
     {
         if (ModelState.IsValid)
@@ -51,7 +45,7 @@ public class CategoryController(ICategoryService service) : Controller
         return View(category);
     }
 
-    [HttpPost]
+    [HttpPost()]
     public async Task<IActionResult> Edit(CategoryDto category)
     {
         if (category == null) return BadRequest();
@@ -60,8 +54,30 @@ public class CategoryController(ICategoryService service) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Delete()
+    [HttpGet()]
+    public async Task<IActionResult> Delete(int? id)
     {
-        return Ok();
+        if (id is null) return BadRequest();
+
+        var category = await service.GetCategoryByIdAsync(id.Value);
+
+        if (category == null) return NotFound();
+
+        return View(category);
+    }
+
+    [HttpPost(), ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        await service.DeleteAsync(id);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var category = await service.GetCategoryByIdAsync(id);
+        return View(category);
     }
 }
