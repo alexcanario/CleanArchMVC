@@ -1,5 +1,4 @@
 ﻿using CleanArchMvc.App.Interfaces;
-using CleanArchMvc.App.Mappings;
 using CleanArchMvc.App.Services;
 using CleanArchMvc.Domain.Interfaces;
 using CleanArchMvc.Infra.Data.Context;
@@ -27,9 +26,11 @@ public static class DependencyInjection
 
     public static void AddAppServices(this IServiceCollection services)
     {
+        var assembly = AppDomain.CurrentDomain.Load("CleanArchMvc.App");
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IProductService, ProductService>();
-        services.AddAutoMapper(typeof(CategoryToCategoryDto).Assembly);
+
+        services.AddAutoMapper(assembly);
     }
 
     private static void AddRepositories(this IServiceCollection services)
