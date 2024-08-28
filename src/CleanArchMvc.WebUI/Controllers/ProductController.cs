@@ -1,18 +1,22 @@
-﻿using CleanArchMvc.App.Interfaces;
+﻿using CleanArchMvc.App.Dtos;
+using CleanArchMvc.App.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
-public class ProductController(IProductService service) : Controller
+public class ProductController(IProductService serviceProduct, ICategoryService serviceCategory) : Controller
 {
+#region MyRegion
+
     // GET: ProductController
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         try
         {
-            var products = await service.GetAllAsync();
+            var products = await serviceProduct.GetAllAsync();
             return products.Any() ? View(products) : NotFound();
         }
         catch
@@ -21,34 +25,30 @@ public class ProductController(IProductService service) : Controller
         }
     }
 
-    // GET: ProductController/Details/5
+#endregion
+
+#region Create
     [HttpGet]
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Create()
     {
-        return BadRequest();
+        ViewBag.CategoryId = new SelectList(await serviceCategory.GetAllAsync(), "Id", "Name");
+        return View();
     }
 
-    // GET: ProductController/Create
-    public IActionResult Create()
-    {
-        return BadRequest();
-    }
-
-    // POST: ProductController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(IFormCollection collection)
+    public async Task<IActionResult> Create(ProductDto product)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return BadRequest();
-        }
+        if (!ModelState.IsValid) return View(product);
+
+        await serviceProduct.CreateAsync(product);
+
+        return RedirectToAction(nameof(Index));
     }
 
+#endregion Create
+
+#region Edit
     // GET: ProductController/Edit/5
     [HttpGet]
     public IActionResult Edit(int id)
@@ -70,7 +70,9 @@ public class ProductController(IProductService service) : Controller
             return BadRequest();
         }
     }
+    #endregion Edit
 
+#region Delete
     // GET: ProductController/Delete/5
     [HttpGet]
     public IActionResult Delete(int id)
@@ -92,4 +94,18 @@ public class ProductController(IProductService service) : Controller
             return BadRequest();
         }
     }
+
+    #endregion Delete
+
+#region Details
+
+    // GET: ProductController/Details/5
+    [HttpGet]
+    public IActionResult Details(int id)
+    {
+        return BadRequest();
+    }
+
+#endregion
+
 }
