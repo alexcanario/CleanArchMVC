@@ -4,6 +4,8 @@ using CleanArchMvc.App.Dtos;
 using CleanArchMvc.App.Interfaces;
 using CleanArchMvc.App.Products.Commands;
 using CleanArchMvc.App.Products.Queries;
+using CleanArchMvc.Domain.Entities;
+using CleanArchMvc.Domain.Interfaces;
 
 using MediatR;
 
@@ -27,7 +29,7 @@ public class ProductService(IMediator mediator, IMapper mapper) : IProductServic
         return mapper.Map<ProductDto>(await mediator.Send(new GetProductByIdWithCategoryQuery(id)));
     }
 
-	public async Task CreateAsync(ProductDto productDto)
+	public async Task Create(ProductDto productDto)
 	{
         await mediator.Send(mapper.Map<ProductCreateCommand>(productDto));
     }
