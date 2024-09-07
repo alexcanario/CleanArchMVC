@@ -8,7 +8,7 @@ namespace CleanArchMvc.WebUI.Controllers;
 
 public class ProductController(IProductService serviceProduct, ICategoryService serviceCategory) : Controller
 {
-#region MyRegion
+#region Index
 
     // GET: ProductController
     [HttpGet]
@@ -51,18 +51,27 @@ public class ProductController(IProductService serviceProduct, ICategoryService 
 #region Edit
     // GET: ProductController/Edit/5
     [HttpGet]
-    public IActionResult Edit(int id)
+    public async Task<IActionResult> Edit(int? id)
     {
-        return BadRequest();
+        if (id is null) return BadRequest();
+        
+        var categories = await serviceCategory.GetAllAsync();
+        var product = await serviceProduct.GetByIdAsync(id.Value);
+        ViewBag.CategoryId = new SelectList(categories, "Id", "Name", product.CategoryId);
+
+        return product == null ? NotFound() : View(product);
     }
 
     // POST: ProductController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, IFormCollection collection)
+    public async Task<IActionResult> Edit(ProductDto product)
     {
+        if (!ModelState.IsValid) return View(nameof(Index));
+
         try
         {
+            await serviceProduct.UpdateAsync(product);
             return RedirectToAction(nameof(Index));
         }
         catch
@@ -75,9 +84,9 @@ public class ProductController(IProductService serviceProduct, ICategoryService 
 #region Delete
     // GET: ProductController/Delete/5
     [HttpGet]
-    public IActionResult Delete(int id)
+    public  IActionResult Delete(int? id)
     {
-        return BadRequest();
+        return Ok();
     }
 
     // POST: ProductController/Delete/5

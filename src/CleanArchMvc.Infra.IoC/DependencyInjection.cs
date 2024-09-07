@@ -26,11 +26,10 @@ public static class DependencyInjection
 
     public static void AddAppServices(this IServiceCollection services)
     {
-        var assembly = AppDomain.CurrentDomain.Load("CleanArchMvc.App");
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IProductService, ProductService>();
 
-        services.AddAutoMapper(assembly);
+        services.AddAutoMapper(AppDomain.CurrentDomain.Load("CleanArchMvc.App"));
     }
 
     private static void AddRepositories(this IServiceCollection services)
