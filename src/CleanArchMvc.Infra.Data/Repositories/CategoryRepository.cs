@@ -13,7 +13,7 @@ public class CategoryRepository(AppDbContext context) : ICategoryRepository
 		return await context.Categories.AsNoTracking().ToListAsync();
 	}
 
-	public async Task<Category> GetByIdAsync(int id)
+	public async Task<Category> GetByIdAsync(int? id)
 	{
 		return await context.Categories.FindAsync(id);
 	}
@@ -29,11 +29,10 @@ public class CategoryRepository(AppDbContext context) : ICategoryRepository
 		await context.SaveChangesAsync();
 	}
 
-	public async Task<Category> UpdateAsync(Category entity)
+	public async Task UpdateAsync(Category entity)
 	{
 		context.Categories.Update(entity);
 		await context.SaveChangesAsync();
-		return entity;
 	}
 
 	public async Task DeleteAsync(int id)
