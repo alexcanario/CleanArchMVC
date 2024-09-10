@@ -37,8 +37,8 @@ public class ProductService(IMediator mediator, IMapper mapper) : IProductServic
         await mediator.Send(mapper.Map<ProductUpdateCommand>(productDto));
     }
 
-	public async Task Delete(int id)
+	public async Task DeleteAsync(int id)
 	{
-        await mediator.Send(new ProductUpdateCommand(id));
+        await mediator.Send(new ProductRemoveCommand(id));
     }
 }

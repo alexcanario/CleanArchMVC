@@ -9,5 +9,5 @@ public interface IProductService
 	Task<ProductDto> GetProductCategoryByIdAsync(int id);
 	Task CreateAsync(ProductDto productDto);
 	Task UpdateAsync(ProductDto productDto);
-	Task Delete(int id);
+	Task DeleteAsync(int id);
 }

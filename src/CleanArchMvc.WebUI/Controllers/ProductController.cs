@@ -84,18 +84,25 @@ public class ProductController(IProductService serviceProduct, ICategoryService 
 #region Delete
     // GET: ProductController/Delete/5
     [HttpGet]
-    public  IActionResult Delete(int? id)
+    public async Task<IActionResult> Delete(int? id)
     {
-        return Ok();
+        if (id is null) return BadRequest();
+
+        var product = await serviceProduct.GetByIdAsync(id.Value);
+        if(product == null) return NotFound();
+
+        return View(product);
     }
 
     // POST: ProductController/Delete/5
-    [HttpPost]
+    [HttpPost(), ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, IFormCollection collection)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
+        if (id is null) return BadRequest();
         try
         {
+            await serviceProduct.DeleteAsync(id.Value);
             return RedirectToAction(nameof(Index));
         }
         catch
