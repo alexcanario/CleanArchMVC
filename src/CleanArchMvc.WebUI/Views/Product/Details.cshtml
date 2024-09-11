@@ -1,0 +1,42 @@
+﻿@model ProductDto;
+
+@{
+    ViewData["Title"] = "Product Management - Details";
+}
+
+<div class="container">
+    <h3>@ViewData["Title"]</h3>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Name)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(d => d.Name)</dd>
+        
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Description)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(d => d.Description)</dd>
+        
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Price)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(d => d.Price)</dd>
+        
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Stock)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(d => d.Stock)</dd>
+        
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Category)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(d => d.Category.Name)</dd>
+        
+        <dt class="col-sm-2">@Html.DisplayNameFor(d => d.Image)</dt>
+        <dd class="col-sm-10">
+
+            @if (ViewBag.ImageExists)
+            {
+                <img src="~/images/@Model.Image" alt="No image" class="rounded-circle" height="300" width="300" asp-append-version="true" />
+            }
+            else
+            {
+                <img src="~/images/noimage.png" alt="No image" class="rounded-circle" height="300" width="300" asp-append-version="true" />
+            }
+        </dd>
+
+</dl>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index">Back to list</a>
+</div>
