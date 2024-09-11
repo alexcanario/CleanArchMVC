@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
-public class ProductController(IProductService serviceProduct, ICategoryService serviceCategory) : Controller
+public class ProductController(IProductService serviceProduct, ICategoryService serviceCategory, IWebHostEnvironment env) : Controller
 {
 #region Index
 
@@ -117,9 +117,19 @@ public class ProductController(IProductService serviceProduct, ICategoryService 
 
     // GET: ProductController/Details/5
     [HttpGet]
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Details(int? id)
     {
-        return BadRequest();
+        if(id is null) return BadRequest();
+
+        var product = await serviceProduct.GetProductCategoryByIdAsync(id.Value);
+        if(product == null) return NotFound();
+
+        var wwwrootPath = env.WebRootPath;
+        var imagePath = Path.Combine(wwwrootPath, "images", product.Image);
+        var imageExists = System.IO.File.Exists(imagePath);
+        ViewBag.ImageExists = imageExists;
+
+        return View(product);
     }
 
 #endregion
