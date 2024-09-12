@@ -1,9 +1,9 @@
 ﻿@model RegisterViewModel;
 
-<h3>Login</h3>
+<h3>Register User</h3>
 <div class="row">
     <div class="col-md-12">
-        <form asp-controller="Accounts" asp-action="Register" method="post" class="form-horizontal">
+        <form asp-controller="Accounts" asp-action="Register" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
@@ -25,8 +25,13 @@
             </div>
 
             <button type="submit" class="btn btn-outline-dark">Register</button>
-            <a asp-controller="Accounts" asp-action="Register" class="btn btn-link" >Return</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-link" >Return</a>
 
         </form>
     </div>
 </div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
