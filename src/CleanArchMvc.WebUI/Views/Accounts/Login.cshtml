@@ -29,8 +29,14 @@
                 </div>
             </div>
 
-            <p asp-action="Register">Register as a new user?</p>
-
+            <p>
+                <a asp-action="Register">Register as a new user?</a>
+            </p>
         </form>
     </div>
 </div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
