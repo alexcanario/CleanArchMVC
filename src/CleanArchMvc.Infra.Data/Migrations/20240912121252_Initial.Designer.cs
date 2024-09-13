@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchMvc.Infra.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240911160931_Add-Identity-Tables")]
-    partial class AddIdentityTables
+    [Migration("20240912121252_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

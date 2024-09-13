@@ -1,11 +1,12 @@
 ﻿using CleanArchMvc.App.Dtos;
 using CleanArchMvc.App.Interfaces;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
+[Authorize]
 public class ProductController(IProductService serviceProduct, ICategoryService serviceCategory, IWebHostEnvironment env) : Controller
 {
 #region Index
@@ -81,8 +82,9 @@ public class ProductController(IProductService serviceProduct, ICategoryService 
     }
     #endregion Edit
 
-#region Delete
+    #region Delete
     // GET: ProductController/Delete/5
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {

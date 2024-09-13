@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CleanArchMvc.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentityTables : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +50,19 @@ namespace CleanArchMvc.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,68 +171,54 @@ namespace CleanArchMvc.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Image",
-                value: "papel.jpeg");
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Image",
-                value: "caneta.jpeg");
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Material escolar" },
+                    { 2, "Eletrônicos" },
+                    { 3, "Acessórios" }
+                });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Products",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Image",
-                value: "lapis.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "Image",
-                value: "celular.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "Image",
-                value: "tv-smart.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 6,
-                column: "Image",
-                value: "notebook.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 7,
-                column: "Image",
-                value: "bolsa.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 8,
-                column: "Image",
-                value: "necessary.jpeg");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 9,
-                column: "Image",
-                value: "pasta.jpeg");
+                columns: new[] { "Id", "CategoryId", "Description", "Image", "Name", "Price", "Stock" },
+                values: new object[,]
+                {
+                    { 1, 1, "Papel A4", "papel.jpeg", "Papel", 10m, 1 },
+                    { 2, 1, "Caneta bic", "caneta.jpeg", "Caneta", 2m, 10 },
+                    { 3, 1, "Lápis Faber Castel", "lapis.jpeg", "Lápis", 4m, 10 },
+                    { 4, 2, "Celular A12", "celular.jpeg", "Celular", 1200m, 10 },
+                    { 5, 2, "Tv 32 polegadas Samsung", "tv-smart.jpeg", "Tv Smart", 2500m, 10 },
+                    { 6, 2, "Notebook Avell liv62", "notebook.jpeg", "Notebook", 9870m, 10 },
+                    { 7, 3, "Bolsa de couro legítimo", "bolsa.jpeg", "Bolsa", 500m, 1 },
+                    { 8, 3, "Necessary padrão", "necessary.jpeg", "Necessary", 150m, 10 },
+                    { 9, 3, "Pasta térmica", "pasta.jpeg", "Pasta", 22m, 10 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -257,6 +258,11 @@ namespace CleanArchMvc.Infra.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -278,73 +284,16 @@ namespace CleanArchMvc.Infra.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 6,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 7,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 8,
-                column: "Image",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 9,
-                column: "Image",
-                value: "");
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }
