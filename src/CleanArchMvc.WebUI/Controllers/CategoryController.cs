@@ -1,10 +1,12 @@
 ﻿using CleanArchMvc.App.Dtos;
 using CleanArchMvc.App.Interfaces;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.WebUI.Controllers;
 
+[Authorize]
 public class CategoryController(ICategoryService service) : Controller
 {
 	[HttpGet()]
@@ -54,6 +56,7 @@ public class CategoryController(ICategoryService service) : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet()]
     public async Task<IActionResult> Delete(int? id)
     {

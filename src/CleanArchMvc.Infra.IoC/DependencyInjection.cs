@@ -25,7 +25,7 @@ public static class DependencyInjection
 
         services.AddSecurity();
 
-        services.AddMediatR(cfg => 
+        services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("CleanArchMvc.App")));
         services.AddRepositories();
     }
