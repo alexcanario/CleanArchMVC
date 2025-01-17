@@ -1,12 +1,14 @@
 ```markdown
 # Projeto .NET 9 com Arquitetura Limpa e Padrão MVC
 
-Este documento descreve um projeto desenvolvido em **.NET 9**, utilizando a **Arquitetura Limpa (Clean Architecture)** e o **padrão MVC (Model-View-Controller)**, seguindo diversas boas práticas de desenvolvimento de software.
+Este documento descreve um projeto desenvolvido em **.NET 9**, utilizando a **Arquitetura Limpa (Clean Architecture)** e o **padrão MVC (Model-View-Controller)**,
+seguindo diversas boas práticas de desenvolvimento de software.
 
 ---
 
 ## **Objetivo do Projeto**
-O objetivo do projeto foi criar uma aplicação escalável, de fácil manutenção e extensível, empregando as melhores práticas para garantir alta qualidade no código e boa experiência para o usuário final.
+O objetivo do projeto foi criar uma aplicação escalável, de fácil manutenção e extensível, empregando as melhores práticas para garantir alta qualidade no código e
+boa experiência para o usuário final.
 
 ---
 
@@ -83,6 +85,7 @@ A aplicação foi dividida em camadas claramente separadas, promovendo independ�
 ---
 
 ## **Considerações Finais**
-Este projeto representa uma aplicação moderna e bem estruturada, aplicando a Arquitetura Limpa e o padrão MVC em conjunto com boas práticas de desenvolvimento. O uso dessas técnicas garante uma aplicação robusta, eficiente e preparada para evoluir conforme as necessidades do negócio.
+Este projeto representa uma aplicação moderna e bem estruturada, aplicando a Arquitetura Limpa e o padrão MVC em conjunto com boas práticas de
+desenvolvimento. O uso dessas técnicas garante uma aplicação robusta, eficiente e preparada para evoluir conforme as necessidades do negócio.
 
 ```
