@@ -9,5 +9,5 @@ public static class DependencyInjection
         
 
         return services;
-    }8
+    }
 }
