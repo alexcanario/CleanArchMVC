@@ -109,6 +109,23 @@ public class ProductUnitTest
 	}
 
 	[Fact]
+	public void CreateProduct_WithNullEmptyImage_ShouldThrow()
+	{
+		Action act = () => Product.Create(1, "Product 1", "A valid description", null, 10.5m, 5, 2);
+		act.Should().Throw<DomainExceptionValidation>()
+			.WithMessage("Invalid image");
+	}
+
+	[Fact]
+	public void CreateProduct_WithLargeImagePath_ShouldThrow()
+	{
+		var largeImagePath = new string('A', 251); // Assuming the maximum length is 250 characters
+		Action act = () => Product.Create(1, "Product 1", "A valid description", largeImagePath, 10.5m, 5, 2);
+		act.Should().Throw<DomainExceptionValidation>()
+			.WithMessage("Invalid image");
+	}
+
+	[Fact]
 	public void CreateProduct_WithZeroPrice_ShouldThrow()
 	{
 		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 0m, 5, 2);
