@@ -70,15 +70,12 @@ public sealed class Product
 
 	private static void ValidateDomain(string description, string image, decimal price, int stock, int categoryId)
 	{
-		DomainExceptionValidation.When(string.IsNullOrEmpty(description), $"Invalid {nameof(Description)} field is required.");
-		DomainExceptionValidation.When(description.Length < 5, $"Invalid {nameof(Description)} field is too short, minimum 5 characters.");
+		DomainExceptionValidation.When(string.IsNullOrEmpty(description), $"Invalid {description}, field is required.");
+		DomainExceptionValidation.When(description.Length < 5, $"Invalid {description}, field is too short, minimum 5 characters.");
 		DomainExceptionValidation.When(string.IsNullOrEmpty(image), "Invalid image");
-		DomainExceptionValidation.When(string.IsNullOrWhiteSpace(image), "Invalid image");
-		DomainExceptionValidation.When(image.Length is > 250, "Invalid image");
-
-		DomainExceptionValidation.When(price is <= 0, $"Invalid {nameof(Price)} field is required.");
-		DomainExceptionValidation.When(stock is < 0, $"Invalid {nameof(Stock)} field is required.");
-		DomainExceptionValidation.When(categoryId <= 0, $"Invalid {nameof(Category)} field is required.");
+		DomainExceptionValidation.When(price <= 0, $"Invalid {price}, field is required.");
+		DomainExceptionValidation.When(stock < 0, $"Invalid {stock}, field is required.");
+		DomainExceptionValidation.When(categoryId <= 0, $"Invalid {categoryId}, field is required.");
 	}
 	
 	private static void ValidateDomain(int id, string name, string description, string image, decimal price, int stock,

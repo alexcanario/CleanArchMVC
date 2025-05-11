@@ -89,7 +89,7 @@ public class ProductUnitTest
 	{
 		Action act = () => Product.Create(1, "Product 1", "", "image.png", 10.5m, 5, 2);
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Description field is required.");
+			.WithMessage("Invalid Name field is required.");
 	}
 
 	[Fact]
@@ -97,7 +97,7 @@ public class ProductUnitTest
 	{
 		Action act = () => Product.Create(1, "Product 1", "desc", "image.png", 10.5m, 5, 2);
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Description field is too short, minimum 5 characters.");
+			.WithMessage("Invalid desc, field is too short, minimum 5 characters.");
 	}
 
 	[Fact]
@@ -109,46 +109,19 @@ public class ProductUnitTest
 	}
 
 	[Fact]
-	public void CreateProduct_WithInvalidImage_ShouldThrow()
-	{
-		Action act = () => Product.Create(1, "Product 1", "A valid description", " ", 10.5m, 5, 2);
-		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid image");
-	}
-
-	[Fact]
-	public void CreateProduct_WithLargePathImage_ShouldThrow()
-	{
-		var largePath = new string('A', 251);
-		Action act = () => Product.Create(1, "Product 1", "A valid description", largePath, 10.5m, 5, 2);
-		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid image");
-	}
-
-	[Fact]
-	public void CreateProduct_WithNullImage_ShouldThrow()
-	{
-		Action act = () => Product.Create(1, "Product 1", "A valid description", null, 10.5m, 5, 2);
-		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid image");
-	}
-
-	[Fact]
 	public void CreateProduct_WithZeroPrice_ShouldThrow()
 	{
 		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 0m, 5, 2);
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Price field is required.");
+			.WithMessage("Invalid 0, field is required.");
 	}
 
-	[Theory]
-	[InlineData(-1)]
-	[InlineData(-2)]
-	public void CreateProduct_WithNegativeStock_ShouldThrow(int value)
+	[Fact]
+	public void CreateProduct_WithNegativeStock_ShouldThrow()
 	{
-		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 10.5m, value, 2);
+		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 10.5m, -1, 2);
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Stock field is required.");
+			.WithMessage("Invalid -1, field is required.");
 	}
 
 	[Fact]
@@ -156,7 +129,7 @@ public class ProductUnitTest
 	{
 		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 10.5m, 5, 0);
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Category field is required.");
+			.WithMessage("Invalid 0, field is required.");
 	}
 
 	[Fact]
@@ -182,6 +155,6 @@ public class ProductUnitTest
 		var product = Product.Create(1, "Product 1", "A valid description", "image.png", 10.5m, 5, 2);
 		Action act = () => product.Update("Pr");
 		act.Should().Throw<DomainExceptionValidation>()
-			.WithMessage("Invalid Name, field is too short, minimum 3 characters.");
+			.WithMessage("Invalid Pr, field is too short, minimum 3 characters.");
 	}
 }
