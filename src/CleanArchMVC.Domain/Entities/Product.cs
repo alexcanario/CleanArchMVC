@@ -64,7 +64,7 @@ public sealed class Product
 	private static void ValidateDomain(int id, string name, string description, string image, decimal price, int stock,
 		int categoryId)
 	{
-		DomainExceptionValidation.When(id > 0, "Invalid id");
+		DomainExceptionValidation.When(id <= 0, "Invalid id");
 		ValidateDomain(name, description, image, price, stock, categoryId);
 	}
 }
