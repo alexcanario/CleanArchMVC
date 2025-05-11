@@ -118,7 +118,7 @@ public class ProductUnitTest
 
 	[Theory]
 	[InlineData(-1)]
-	[InlineData(0)]
+	[InlineData(-2)]
 	public void CreateProduct_WithNegativeStock_ShouldThrow(int value)
 	{
 		Action act = () => Product.Create(1, "Product 1", "A valid description", "image.png", 10.5m, value, 2);
