@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace CleanArchMVC.Infra.IoC;
 
 using Microsoft.Extensions.DependencyInjection;
