@@ -1,8 +1,14 @@
 <Solution>
-  <Project Path="src/CleanArchMVC.App/CleanArchMVC.App.csproj" />
-  <Project Path="src/CleanArchMVC.Domain/CleanArchMVC.Domain.csproj" />
-  <Project Path="src/CleanArchMVC.Infra.Data/CleanArchMVC.Infra.Data.csproj" />
-  <Project Path="src/CleanArchMVC.Infra.IoC/CleanArchMVC.Infra.IoC.csproj" />
-  <Project Path="src/CleanArchMVC.WebUI/CleanArchMVC.WebUI.csproj" />
-  <Project Path="tests/CleanArchMVC.Domain.Tests/CleanArchMVC.Domain.Tests.csproj" Id="0a3bc4b7-a3fb-4afd-8436-f52c36d633cd" />
+  <Folder Name="/IU/">
+    <Project Path="src/CleanArchMVC.WebUI/CleanArchMVC.WebUI.csproj" />
+  </Folder>
+  <Folder Name="/Modules/">
+    <Project Path="src/CleanArchMVC.App/CleanArchMVC.App.csproj" />
+    <Project Path="src/CleanArchMVC.Domain/CleanArchMVC.Domain.csproj" />
+    <Project Path="src/CleanArchMVC.Infra.Data/CleanArchMVC.Infra.Data.csproj" />
+    <Project Path="src/CleanArchMVC.Infra.IoC/CleanArchMVC.Infra.IoC.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/CleanArchMVC.Domain.Tests/CleanArchMVC.Domain.Tests.csproj" Id="0a3bc4b7-a3fb-4afd-8436-f52c36d633cd" />
+  </Folder>
 </Solution>
